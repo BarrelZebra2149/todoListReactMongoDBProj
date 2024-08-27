@@ -1,4 +1,4 @@
-import "./home.css"
+import "../style/home.css"
 import axios from "axios";
 
 const serverURL = "http://localhost:5000/logout";
