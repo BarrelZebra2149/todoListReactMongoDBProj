@@ -1,8 +1,23 @@
-import './App.css';
-
 function App() {
+
+
   return (
-    <h1>Hello, world!</h1>
+      <>
+      <h1>Login</h1>
+      <form>
+        <label>
+          email:
+          <input type="text" name="email" />
+        </label>
+          <br/>
+        <label>
+          Password:
+          <input type="password" name="password" />
+        </label>
+          <br/>
+        <input type="submit" value="Submit" />
+      </form>
+      </>
   );
 }
 
