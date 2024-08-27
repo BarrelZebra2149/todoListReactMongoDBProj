@@ -1,7 +1,7 @@
+import "./home.css"
 import axios from "axios";
 
 const serverURL = "http://localhost:5000/logout";
-
 const Home = ({ setIsLoggedIn }) => {
     const handleLogout = async () => {
         try {
@@ -14,7 +14,7 @@ const Home = ({ setIsLoggedIn }) => {
     };
 
     return (
-        <div>
+        <div className="container">
             <h1>Home Page</h1>
             <button onClick={handleLogout}>Log out</button>
         </div>

@@ -1,3 +1,4 @@
+import "./login.css"
 import { useState } from "react";
 import axios from "axios";
 
@@ -28,20 +29,18 @@ const Login = ({ setIsLoggedIn }) => {
     };
 
     return (
-        <>
+        <div className="container">
             <h1>Login</h1>
             <label>
                 Email:
                 <input type="text" name="email" onChange={handleEmailChange} value={email} />
             </label>
-            <br />
             <label>
                 Password:
                 <input type="password" name="password" onChange={handlePasswordChange} value={password} />
             </label>
-            <br />
             <button onClick={postElements}>Login</button>
-        </>
+        </div>
     );
 };
 
