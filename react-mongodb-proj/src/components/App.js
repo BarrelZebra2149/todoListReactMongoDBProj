@@ -1,20 +1,23 @@
-import {useState} from "react";
-import {Route, Routes} from "react-router-dom";
-import {Provider, useSelector} from 'react-redux';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Route, Routes } from "react-router-dom";
 import Login from "./Login";
 import Home from "./Home";
 import SignUp from "./SignUp";
-import store from "../store/store";
+import { checkAuthStatus } from "../store/authActions";
 
 function App() {
+    const dispatch = useDispatch();
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+    // Dispatch the checkAuthStatus action when the app loads
+    useEffect(() => {dispatch(checkAuthStatus());}, [dispatch]);
+
     return (
-        <Provider store={store}>
-            <Routes>
-                <Route path="/" element={isAuthenticated ?  (<Home />)  : (<Login />)}/>
-                <Route path="/signup" element={<SignUp/>}/>
-            </Routes>
-        </Provider>
+        <Routes>
+            <Route path="/" element={isAuthenticated ? (<Home />) : (<Login />)} />
+            <Route path="/signup" element={<SignUp />} />
+        </Routes>
     );
 }
 

@@ -2,7 +2,6 @@ import "../style/home.css"
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {signOut} from "../store/authActions";
-import {Link} from "react-router-dom";
 
 const serverURL = "http://localhost:5000/logout";
 const Home = () => {
@@ -20,16 +19,11 @@ const Home = () => {
 
     return (
         <div className="container">
-            {isAuthenticated ?
-                (<>
-                    <h1>You didn't sign in.</h1>
-                    <Link to="/">go Back</Link>
-                </>)
-                :
-                (<>
+            {isAuthenticated &&
+                <>
                     <h1>Home Page</h1>
                     <button onClick={handleLogout}>Log out</button>
-                </>)}
+                </>}
         </div>
     );
 };

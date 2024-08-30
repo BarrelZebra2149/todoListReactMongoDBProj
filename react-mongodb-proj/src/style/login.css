@@ -1,58 +1,73 @@
-/* App.style or Login.style */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+/* Styles for the login container */
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
+/* Center and style the heading */
+.container h1 {
+    text-align: center;
     font-size: 24px;
     margin-bottom: 20px;
     color: #333;
-    text-align: center;
 }
 
-label {
+/* Label and input field styling */
+.container label {
     display: block;
-    font-size: 14px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    font-weight: bold;
     color: #555;
 }
 
-input[type="text"],
-input[type="password"] {
-    width: 100%;
+.container input[type="text"],
+.container input[type="password"] {
+    width: calc(100% - 20px);
     padding: 8px;
-    margin: 5px 0 20px 0;
+    margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 16px;
+    font-size: 14px;
+    background-color: #fff;
 }
 
-button {
+/* Button styling */
+.container button {
     width: 100%;
-    background-color: #4CAF50;
-    color: white;
     padding: 10px;
+    margin-top: 15px;
     border: none;
     border-radius: 4px;
-    cursor: pointer;
+    background-color: #007BFF;
+    color: white;
     font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #45a049;
+.container button:hover {
+    background-color: #0056b3;
 }
 
-.container {
-    width: 300px;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+/* Add some space between the two buttons */
+.container button + br + .container button {
+    margin-top: 10px;
+}
+
+/* Link button styling */
+.container a {
+    text-decoration: none;
+}
+
+.container a button {
+    background-color: #28a745;
+}
+
+.container a button:hover {
+    background-color: #218838;
 }

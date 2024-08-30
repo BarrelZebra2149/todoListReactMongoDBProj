@@ -13,12 +13,13 @@ const http = require('http');
 const server = http.createServer(app);
 const uri = process.env.MONGO_DB_URI;
 
+let isLogOn = false;
 let targetCollection;
 
 async function prepareDB() {
     try {
         const client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-        targetCollection = client.db("emp").collection("users");
+        targetCollection = client.db("sample_mflix").collection("users");
         console.log('MongoDB Atlas Connected');
     } catch (e) {
         console.error(e);
@@ -62,6 +63,7 @@ router.route("/login").post(async (req, res) => {
                     authorized: true
                 }
                 res.send({ name: targetUser.name, flag: true });
+                isLogOn = true;
             } else {
                 console.log("user doesn't exist or password is incorrect.");
                 res.send({ flag: false });
@@ -89,9 +91,14 @@ router.route("/logout").get((req, res) => {
         } else {
             console.log("Session destroyed.");
             res.send({ flag: true });
+            isLogOn = false;
         }
     });
 });
+
+router.route("/checkLogOn").get((req, res) => {
+    res.send({ flag: isLogOn });
+})
 
 app.use('/', router);
 

@@ -36,15 +36,16 @@ const Login = () => {
         <div className="container">
             <h1>Login</h1>
             <label>
-                Email:
+                Email
                 <input type="text" name="email" onChange={handleEmailChange} value={email} />
             </label>
             <label>
-                Password:
+                Password
                 <input type="password" name="password" onChange={handlePasswordChange} value={password} />
             </label>
             <button onClick={postElements}>Login</button>
-            <Link to="/signup">Sign Up</Link>
+            <br/>
+            <Link to="/signup"><button>Sign Up</button></Link>
         </div>
     );
 };
