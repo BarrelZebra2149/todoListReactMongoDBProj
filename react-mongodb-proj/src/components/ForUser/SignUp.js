@@ -1,4 +1,4 @@
-import "../style/form.css";
+import "../../style/form.css";
 import { useState } from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";

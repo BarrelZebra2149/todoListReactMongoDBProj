@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
-import Login from "./Login";
-import Home from "./Home";
-import SignUp from "./SignUp";
+import Login from "./ForUser/Login";
+import Home from "./ForUser/Home";
+import SignUp from "./ForUser/SignUp";
 import { checkAuthStatus } from "../store/authActions";
 
 function App() {

@@ -1,7 +1,7 @@
-import "../style/home.css"
+import "../../style/home.css"
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
-import {signOut} from "../store/authActions";
+import {signOut} from "../../store/authActions";
 
 const serverURL = "http://localhost:5000/logout";
 const Home = () => {

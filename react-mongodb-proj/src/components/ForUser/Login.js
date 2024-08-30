@@ -1,9 +1,9 @@
-import "../style/form.css";
+import "../../style/form.css";
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signIn } from "../store/authActions";
+import { signIn } from "../../store/authActions";
 
 const serverURL = "http://localhost:5000/login";
 
