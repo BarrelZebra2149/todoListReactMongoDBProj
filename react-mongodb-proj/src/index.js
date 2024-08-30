@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './components/App';
+import App from './components/User/App';
 import store from "./store/store";
 import {Provider, useDispatch} from "react-redux";
 import {BrowserRouter} from "react-router-dom";
