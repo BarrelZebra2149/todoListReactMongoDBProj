@@ -61,7 +61,7 @@ router.route("/login").post(async (req, res) => {
                     name: targetUser.name,
                     authorized: true
                 }
-                res.send({ flag: true });
+                res.send({ name: targetUser.name, flag: true });
             } else {
                 console.log("user doesn't exist or password is incorrect.");
                 res.send({ flag: false });

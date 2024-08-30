@@ -2,14 +2,13 @@ import "../style/login.css"
 import { useState } from "react";
 import axios from "axios";
 import {Link} from "react-router-dom"
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
+import {signIn} from "../store/authActions";
 
 const serverURL = "http://localhost:5000/login";
 
-//TODO: implement login with redux
 const Login = () => {
     const dispatch = useDispatch();
-    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -25,7 +24,7 @@ const Login = () => {
         console.log('email:', email, 'password:', password);
         try {
             const response = await axios.post(serverURL, { email, password }, { withCredentials: true });
-            setIsLoggedIn(response.data.flag);
+            if(response.data.flag) { dispatch(signIn({name : response.data.name, email : email})); }
         } catch (error) {
             console.error('Error posting elements:', error);
         }

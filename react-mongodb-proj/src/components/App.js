@@ -11,9 +11,7 @@ function App() {
     return (
         <Provider store={store}>
             <Routes>
-                <Route path="/" element={isAuthenticated ?
-                    (<Home />)
-                    : (<Login />)}/>
+                <Route path="/" element={isAuthenticated ?  (<Home />)  : (<Login />)}/>
                 <Route path="/signup" element={<SignUp/>}/>
             </Routes>
         </Provider>
