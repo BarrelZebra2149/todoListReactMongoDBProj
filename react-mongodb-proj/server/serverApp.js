@@ -13,12 +13,13 @@ const http = require('http');
 const server = http.createServer(app);
 const uri = process.env.MONGO_DB_URI;
 
-let targetCollection;
+let userCollection, scheduleCollection;
 
 async function prepareDB() {
     try {
         const client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-        targetCollection = client.db("sample_mflix").collection("users");
+        userCollection = client.db("sample_mflix").collection("users");
+        scheduleCollection = client.db("sample_mflix").collection("schedules");
         console.log('MongoDB Atlas Connected');
     } catch (e) {
         console.error(e);
@@ -53,7 +54,7 @@ router.route("/login").post(async (req, res) => {
     let targetUser;
     if (req.body.email !== "") {
         try {
-            targetUser = await targetCollection.findOne({ email: req.body.email });
+            targetUser = await userCollection.findOne({ email: req.body.email });
             if (targetUser && targetUser.password === req.body.password) {
                 console.log("login successful");
                 req.session.user = {
@@ -100,7 +101,7 @@ router.route("/checkLogOn").get((req, res) => {
 router.route("/user").post((req, res) => {
     console.log(req.body);
     try {
-        targetCollection.insertOne(req.body);
+        userCollection.insertOne(req.body);
         res.send({ flag: true });
     } catch (err) {
         console.error(e);
@@ -108,7 +109,6 @@ router.route("/user").post((req, res) => {
         res.send({ flag: false });
     }
 })
-
 
 app.use('/', router);
 
