@@ -97,9 +97,24 @@ router.route("/checkLogOn").get((req, res) => {
     res.send({ flag: !!req.session.user });
 })
 
+router.route("/user").post((req, res) => {
+    console.log(req.body);
+    try {
+        targetCollection.insertOne(req.body);
+        res.send({ flag: true });
+    } catch (err) {
+        console.error(e);
+        res.status(500).send('Error connecting to MongoDB');
+        res.send({ flag: false });
+    }
+})
+
+
 app.use('/', router);
 
 server.listen(app.get('port'), () => {
     console.log("서버 실행 중 ... http://localhost:" + app.get('port'));
     prepareDB().then(r => console.log('db connection successful'));
 });
+
+
