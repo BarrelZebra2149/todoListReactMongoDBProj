@@ -13,7 +13,6 @@ const http = require('http');
 const server = http.createServer(app);
 const uri = process.env.MONGO_DB_URI;
 
-let isLogOn = false;
 let targetCollection;
 
 async function prepareDB() {
@@ -63,7 +62,6 @@ router.route("/login").post(async (req, res) => {
                     authorized: true
                 }
                 res.send({ name: targetUser.name, flag: true });
-                isLogOn = true;
             } else {
                 console.log("user doesn't exist or password is incorrect.");
                 res.send({ flag: false });
@@ -91,13 +89,12 @@ router.route("/logout").get((req, res) => {
         } else {
             console.log("Session destroyed.");
             res.send({ flag: true });
-            isLogOn = false;
         }
     });
 });
 
 router.route("/checkLogOn").get((req, res) => {
-    res.send({ flag: isLogOn });
+    res.send({ flag: !!req.session.user });
 })
 
 app.use('/', router);
