@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
 const MongoStore = require('connect-mongo');
 const { MongoClient } = require('mongodb');
+
 require('dotenv').config();
 
 const app = express();
@@ -17,7 +18,7 @@ let targetCollection;
 async function prepareDB() {
     try {
         const client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-        targetCollection = client.db("sample_mflix").collection("users");
+        targetCollection = client.db("emp").collection("users");
         console.log('MongoDB Atlas Connected');
     } catch (e) {
         console.error(e);

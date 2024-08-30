@@ -1,10 +1,15 @@
 import "../style/login.css"
 import { useState } from "react";
 import axios from "axios";
+import {Link} from "react-router-dom"
+import {useDispatch, useSelector} from "react-redux";
 
 const serverURL = "http://localhost:5000/login";
 
-const Login = ({ setIsLoggedIn }) => {
+//TODO: implement login with redux
+const Login = () => {
+    const dispatch = useDispatch();
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -40,6 +45,7 @@ const Login = ({ setIsLoggedIn }) => {
                 <input type="password" name="password" onChange={handlePasswordChange} value={password} />
             </label>
             <button onClick={postElements}>Login</button>
+            <Link to="/signup">Sign Up</Link>
         </div>
     );
 };
