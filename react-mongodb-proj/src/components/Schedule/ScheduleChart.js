@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Scheduler, {SchedulerData, ViewTypes, DemoData} from '../src/index'
+import Scheduler, {SchedulerData, ViewTypes, DemoData} from 'react-big-scheduler';
 import withDragDropContext from './withDnDContext'
 
 class scheduleChart extends Component{
