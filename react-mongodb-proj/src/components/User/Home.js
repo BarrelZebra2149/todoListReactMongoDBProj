@@ -3,7 +3,7 @@ import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {signOut} from "../../store/authActions";
 import Schedule from "../Schedule/Schedule";
-import ScheduleChart from "../Schedule/ScheduleChart";
+import ScheduleApp from "../Schedule/ScheduleApp";
 
 const serverURL = "http://localhost:5000/logout";
 const Home = () => {
@@ -23,10 +23,9 @@ const Home = () => {
         <div className="container">
             {isAuthenticated &&
                 <>
-                    <h1>Home Page</h1>
+                    <Schedule/>
+                    <ScheduleApp/>
                     <button onClick={handleLogout}>Log out</button>
-                    <Schedule />
-                    <ScheduleChart />
                 </>}
         </div>
     );

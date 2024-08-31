@@ -4,12 +4,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
 
-import "./styles.css";
-
-// must manually import the stylesheets for each plugin
-import "@fullcalendar/core/main.css";
-import "@fullcalendar/daygrid/main.css";
-import "@fullcalendar/timegrid/main.css";
+import "../../style/chartStyle.css";
 
 export default class ScheduleApp extends React.Component {
     calendarComponentRef = React.createRef();
@@ -87,7 +82,6 @@ export default class ScheduleApp extends React.Component {
                 <div className="demo-app-top">
                     <button onClick={this.toggleWeekends}>toggle weekends</button>&nbsp;
                     <button onClick={this.gotoPast}>go to a date in the past</button>
-                    &nbsp; (also, click a date/time to add an event)
                 </div>
                 <div className="demo-app-calendar">
                     <FullCalendar
@@ -118,5 +112,4 @@ export default class ScheduleApp extends React.Component {
         let calendarApi = this.calendarComponentRef.current.getApi();
         calendarApi.gotoDate("2000-01-01"); // call a method on the Calendar object
     };
-
 }

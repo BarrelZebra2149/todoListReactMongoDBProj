@@ -33,7 +33,7 @@ const Schedule = () => {
     };
 
     return (
-        <div className="container">
+        <div className="container-schedule">
             <h1>Create Schedule</h1>
             <label htmlFor="todo">
                 Task

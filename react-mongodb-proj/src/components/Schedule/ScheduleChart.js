@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import Scheduler, {SchedulerData, ViewTypes, DemoData} from 'react-big-scheduler';
-import withDragDropContext from './withDnDContext'
+import withDnDContext from "./withDnDContext";
 
 class scheduleChart extends Component{
     constructor(props){
@@ -95,4 +95,4 @@ class scheduleChart extends Component{
     }
 }
 
-export default withDragDropContext(scheduleChart)
+export default withDnDContext(scheduleChart)
