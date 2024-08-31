@@ -99,7 +99,6 @@ router.route("/checkLogOn").get((req, res) => {
 })
 
 router.route("/user").post((req, res) => {
-    console.log(req.body);
     try {
         userCollection.insertOne({...req.body, email:req.session.user.email});
         res.send({ flag: true });
@@ -143,6 +142,27 @@ router.route("/schedule").post(async (req, res) => {
     try {
         console.log(req.body);
         await scheduleCollection.insertOne({...req.body, email : req.session.user.email, done : false});
+        res.send({ flag: true });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error connecting to MongoDB');
+    }
+});
+
+router.route("/schedule").delete(async (req, res) => {
+    try {
+        await scheduleCollection.deleteOne({email : req.session.user.email, title : req.body.title});
+        res.send({ flag: true });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error connecting to MongoDB');
+    }
+});
+
+router.route("/schedule").put(async (req, res) => {
+    try {
+
+
         res.send({ flag: true });
     } catch (err) {
         console.error(err);

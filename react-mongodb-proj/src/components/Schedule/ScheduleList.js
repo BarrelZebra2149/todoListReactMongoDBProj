@@ -1,6 +1,38 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
-const ScheduleList = ({ todoList, onDoneFlag, onDelete, onEdit }) => {
+const serverURL = "http://localhost:5000/schedule";
+const ScheduleList = () => {
+    const [todoList, setTodoList] = useState([]);
+
+    useEffect(function () { updateList().then(r => 'initializing success')});
+
+    const updateList = async () => {
+        const response = await axios.get(serverURL, {withCredentials : true});
+        if(response.data.flag) {
+            setTodoList(response.data.schedules);
+        }
+    }
+
+    // Function to handle task deletion
+    const onDelete = async (item) => {
+        const response = await axios.delete(serverURL, {data : {title : item.title}, withCredentials : true});
+        if(response.data.flag) {
+            updateList().then(() => console.log('delete success'));
+        }
+    };
+
+    // Function to handle toggling the done flag
+    const onDoneFlag = (item) => {
+
+        updateList().then(() => console.log('flag reversed'));
+    };
+
+    // Function to handle task editing
+    const onEdit = (item) => {
+
+        updateList().then(() => console.log('edit success'));
+    };
     return (
         <>
             {todoList.map((item) => (
