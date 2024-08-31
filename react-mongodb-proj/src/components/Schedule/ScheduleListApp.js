@@ -9,29 +9,6 @@ const ScheduleListApp = () => {
         { no: 103, title: "Read Book", done: false, dateFrom: "2024-09-02T10:00", dateTo: "2024-09-02T12:00" },
         { no: 104, title: "Go Grocery Shopping", done: false, dateFrom: "2024-09-03T08:00", dateTo: "2024-09-03T09:30" }
     ]);
-    const [noCnt, setNoCnt] = useState(105);
-    const [inputTitle, setInputTitle] = useState("");
-    const [inputDateFrom, setInputDateFrom] = useState("");
-    const [inputDateTo, setInputDateTo] = useState("");
-
-    // Function to handle adding a new task
-    const onClickEvent = () => {
-        if (inputTitle.trim() === "" || !inputDateFrom || !inputDateTo) return; // Prevent adding tasks with empty fields
-
-        setTodoList([
-            ...todoList,
-            { no: noCnt, title: inputTitle, done: false, dateFrom: inputDateFrom, dateTo: inputDateTo }
-        ]);
-        setNoCnt(noCnt + 1);
-        setInputTitle("");
-        setInputDateFrom("");
-        setInputDateTo("");
-    };
-
-    // Function to handle input changes
-    const onChangeTitle = (e) => setInputTitle(e.target.value);
-    const onChangeDateFrom = (e) => setInputDateFrom(e.target.value);
-    const onChangeDateTo = (e) => setInputDateTo(e.target.value);
 
     // Function to handle task deletion
     const onDelete = (item) => {

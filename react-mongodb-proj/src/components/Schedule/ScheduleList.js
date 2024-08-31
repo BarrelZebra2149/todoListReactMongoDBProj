@@ -23,8 +23,6 @@ const ScheduleListItem = ({ item, onDoneFlag, onDelete, onEdit }) => {
     const [dateFromTmp, setDateFromTmp] = useState(item.dateFrom);
     const [dateToTmp, setDateToTmp] = useState(item.dateTo);
 
-    const lineThroughClass = { textDecoration: "line-through", color: "#888" };
-
     return (
         <>
             <td>
