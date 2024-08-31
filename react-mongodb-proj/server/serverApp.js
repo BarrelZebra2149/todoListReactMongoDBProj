@@ -141,6 +141,10 @@ router.route("/schedule").get(async (req, res) => {
 router.route("/schedule").post(async (req, res) => {
     try {
         console.log(req.body);
+        if(req.body.dateFrom.valueOf() >= req.body.dateTo.valueOf()) {
+            res.send({ flag: false });
+            return;
+        }
         await scheduleCollection.insertOne({...req.body, email : req.session.user.email, done : false});
         res.send({ flag: true });
     } catch (err) {
