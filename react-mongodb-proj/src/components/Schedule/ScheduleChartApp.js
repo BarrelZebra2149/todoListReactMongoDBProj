@@ -2,31 +2,43 @@ import React from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
+import interactionPlugin from "@fullcalendar/interaction";
+import axios from "axios"; // Make sure axios is imported
 
 import "../../style/chartStyle.css";
 
+
+const serverURI = "http://localhost:5000/scheduleAll"
 export default class ScheduleChartApp extends React.Component {
     calendarComponentRef = React.createRef();
 
     state = {
         calendarWeekends: true,
-        calendarEvents: [
-            {
-                id: "1",
-                title: "Event 1",
-                start: new Date("2019-06-05T13:00:00.000Z"),
-                end: new Date("2019-06-06T01:00:00.000Z")
-            },
-        ]
+        calendarEvents: [],
+        currentYear: new Date().getFullYear(),
     };
+
+    // Fetch events when the component mounts
+    async componentDidMount() {
+        try {
+            const response = await axios.get(serverURI);// Replace with your actual API endpoint
+            console.log(response.data.schedules);
+            if(response.data.flag) {
+                this.setState({
+                    calendarEvents: response.data.schedules // Assuming the API returns events in the correct format
+                });
+            }
+        } catch (error) {
+            console.error("Error fetching calendar events:", error);
+        }
+    }
 
     render() {
         return (
             <div className="demo-app">
                 <div className="demo-app-top">
-                    <button onClick={this.toggleWeekends}>toggle weekends</button>&nbsp;
-                    <button onClick={this.gotoPast}>go to a date in the past</button>
+                    <button onClick={() => this.changeYear(-1)}>Go Prev Year</button>
+                    <button onClick={() => this.changeYear(1)}>Go Next Year</button>
                 </div>
                 <div className="demo-app-calendar">
                     <FullCalendar
@@ -34,27 +46,27 @@ export default class ScheduleChartApp extends React.Component {
                         header={{
                             left: "prev,next today",
                             center: "title",
-                            right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
+                            right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
                         }}
                         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                         ref={this.calendarComponentRef}
                         weekends={this.state.calendarWeekends}
-                        events={this.state.calendarEvents}
+                        events={this.state.calendarEvents} // Use the events from the state
                     />
                 </div>
             </div>
         );
     }
 
-    toggleWeekends = () => {
-        this.setState({
-            // update a property
-            calendarWeekends: !this.state.calendarWeekends
-        });
-    };
-
-    gotoPast = () => {
+    changeYear = (num) => {
         let calendarApi = this.calendarComponentRef.current.getApi();
-        calendarApi.gotoDate("2019-06-01"); // call a method on the Calendar object
+        let currentDate = calendarApi.getDate();
+        let newYear = this.state.currentYear + num;
+        let newDate = new Date(currentDate);
+        newDate.setFullYear(newYear);
+        this.setState({
+            currentYear: newYear,
+        });
+        calendarApi.gotoDate(newDate);
     };
 }
