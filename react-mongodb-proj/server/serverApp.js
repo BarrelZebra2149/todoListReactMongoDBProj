@@ -17,7 +17,7 @@ let userCollection, scheduleCollection;
 
 async function prepareDB() {
     try {
-        const client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+        const client = await MongoClient.connect(uri);
         userCollection = client.db("sample_mflix").collection("users");
         scheduleCollection = client.db("sample_mflix").collection("schedules");
         console.log('MongoDB Atlas Connected');
@@ -154,7 +154,7 @@ app.use('/', router);
 
 server.listen(app.get('port'), () => {
     console.log("서버 실행 중 ... http://localhost:" + app.get('port'));
-    prepareDB().then(r => console.log('db connection successful'));
+    prepareDB().then(() => console.log('db connection successful'));
 });
 
 
