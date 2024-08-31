@@ -34,7 +34,7 @@ const Schedule = () => {
                     end: "",
                 });
             } else {
-                throw new Error("Failed to create schedule");
+                throw new Error("end date can't be before start date");
             }
         } catch (error) {
             console.error("Error submitting schedule:", error);
