@@ -5,14 +5,12 @@ const ScheduleList = ({ todoList, onDoneFlag, onDelete, onEdit }) => {
         <>
             {todoList.map((item) => (
                 <tr key={item.no}>
-                    <td colSpan={3} style={{ padding: "0px" }}>
-                        <ScheduleListItem
-                            item={item}
-                            onDoneFlag={onDoneFlag}
-                            onDelete={onDelete}
-                            onEdit={onEdit}
-                        />
-                    </td>
+                    <ScheduleListItem
+                        item={item}
+                        onDoneFlag={onDoneFlag}
+                        onDelete={onDelete}
+                        onEdit={onEdit}
+                    />
                 </tr>
             ))}
         </>
@@ -20,60 +18,84 @@ const ScheduleList = ({ todoList, onDoneFlag, onDelete, onEdit }) => {
 };
 
 const ScheduleListItem = ({ item, onDoneFlag, onDelete, onEdit }) => {
-    const [flag, setFlag] = useState(false);
-    const [outputTitle, setOutputTtile] = useState(item.title);
-    const lineThroughClass = { textDecoration: "line-through", color: "blue" };
+    const [isEditing, setIsEditing] = useState(false);
     const [titleTmp, setTitleTmp] = useState(item.title);
+    const [dateFromTmp, setDateFromTmp] = useState(item.dateFrom);
+    const [dateToTmp, setDateToTmp] = useState(item.dateTo);
+
+    const lineThroughClass = { textDecoration: "line-through", color: "#888" };
 
     return (
-        <div className="input-group mb-3">
-            <div className="input-group-prepend">
-                <div className="input-group-text">
-                    <input
-                        onChange={() => {
-                            onDoneFlag(item);
-                        }}
-                        checked={item.done && "checked"}
-                        type="checkbox"
-                    />
-                </div>
-            </div>
-            <input
-                style={item.done ? lineThroughClass : {}}
-                type="text"
-                className="form-control"
-                readOnly={flag ? "" : "readOnly"}
-                value={outputTitle}
-                onChange={(e) => {
-                    setOutputTtile(e.target.value);
-                    setTitleTmp(e.target.value);
-                }}
-                onFocus={() => setFlag(true)}
-                onBlur={() => {
-                    setFlag(false);
-                    setOutputTtile(item.title);
-                }}
-            />
-            <div className="input-group-append">
-                <button
-                    onClick={() => {
-                        setOutputTtile(titleTmp);
-                        onEdit({ no: item.no, title: titleTmp, done: item.done });
+        <>
+            <td>
+                <input
+                    type="checkbox"
+                    checked={item.done}
+                    onChange={() => onDoneFlag(item)}
+                />
+            </td>
+            <td>
+                <input
+                    type="text"
+                    className={`${item.done ? 'line-through' : ''}`}
+                    style={{ width: '25vw', marginTop: '17px' }}
+                    value={titleTmp}
+                    readOnly={!isEditing}
+                    onChange={(e) => setTitleTmp(e.target.value)}
+                    onFocus={() => setIsEditing(true)}
+                    onBlur={() => {
+                        setIsEditing(false);
+                        onEdit({...item, title: titleTmp, dateFrom: dateFromTmp, dateTo: dateToTmp});
                     }}
-                    className="btn btn-primary"
+                />
+            </td>
+            <td>
+                <input
+                    type="datetime-local"
+                    className="form-control"
+                    style={{marginTop: '17px'}}
+                    value={dateFromTmp}
+                    readOnly={!isEditing}
+                    onChange={(e) => setDateFromTmp(e.target.value)}
+                    onFocus={() => setIsEditing(true)}
+                    onBlur={() => {
+                        setIsEditing(false);
+                        onEdit({ ...item, title: titleTmp, dateFrom: dateFromTmp, dateTo: dateToTmp });
+                    }}
+                />
+            </td>
+            <td>
+                <input
+                    type="datetime-local"
+                    className="form-control"
+                    style={{marginTop: '17px'}}
+                    value={dateToTmp}
+                    readOnly={!isEditing}
+                    onChange={(e) => setDateToTmp(e.target.value)}
+                    onFocus={() => setIsEditing(true)}
+                    onBlur={() => {
+                        setIsEditing(false);
+                        onEdit({ ...item, title: titleTmp, dateFrom: dateFromTmp, dateTo: dateToTmp });
+                    }}
+                />
+            </td>
+            <td>
+                <button
+                    onClick={() => onEdit({ ...item, title: titleTmp, dateFrom: dateFromTmp, dateTo: dateToTmp })}
+                    className="btn-primary"
                     type="button"
                 >
                     Edit
                 </button>
                 <button
                     onClick={() => onDelete(item)}
-                    className="btn btn-danger"
+                    className="btn-danger"
                     type="button"
                 >
                     Delete
                 </button>
-            </div>
-        </div>
+            </td>
+        </>
     );
 };
 

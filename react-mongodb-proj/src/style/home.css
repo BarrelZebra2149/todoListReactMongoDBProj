@@ -45,3 +45,12 @@ button {
 button:hover {
     background-color: #e60000;
 }
+
+.btn-primary {
+    background-color: #007bff !important; /* Blue background for primary button */
+    border: none; /* Remove border */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3 !important; /* Darker blue on hover */
+}

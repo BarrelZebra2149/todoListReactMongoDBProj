@@ -1,45 +1,75 @@
-/* General styling for todo list and schedule components */
-.todoList, .container-schedule {
-    font-family: Arial, sans-serif;
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 40px; /* Increased padding for more visual space inside the border */
+/* General reset for body to prevent unwanted scrolling */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* Disable scrolling on the body */
+}
+
+/* Ensure the container for the schedule form is not scrollable */
+.container-schedule {
+    width: 80vw; /* Increase width to take up more space */
+    max-width: 800px; /* Increase maximum width */
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9;
-    max-height: 600px; /* Increased max height for larger divs */
-    overflow-y: auto;  /* Enable scrolling within these components only */
+    background-color: #ffffff;
+    height: auto; /* Allow height to adjust based on content */
+    max-height: 80vh; /* Ensure container fits within viewport */
+    overflow-y: auto; /* Allow scrolling if content overflows */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
-/* Disable scrolling on the outermost container (if applied) */
-body, html {
-    overflow: hidden; /* Prevent scrolling on the entire page */
-}
-
-/* Scrollable area to ensure accessibility to both todo list and schedule components */
-.todoList {
-    overflow-y: auto;
-    max-height: 500px; /* Adjusted max height for todo list */
-}
-
-.container-schedule {
-    overflow-y: auto;
-    max-height: 500px; /* Adjusted max height for schedule */
-}
-
-/* Header styling shared between components */
-.todoList h1, .container-schedule h1 {
+/* Styling for header in the schedule component */
+.container-schedule h1 {
     font-size: 24px;
     color: #333;
     margin-bottom: 20px;
     text-align: center;
 }
 
+/* Styling for form labels in the schedule component */
+.container-schedule label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Input styling in the schedule component */
+.container-schedule input[type="text"],
+.container-schedule input[type="datetime-local"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* Ensure the list container fits all elements */
+.todoList {
+    font-family: Arial, sans-serif;
+    max-width: 150vw; /* Ensure it uses the full available width */
+    margin: 20px auto;
+    padding: 20px; /* Adjust padding for better spacing */
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    /* Remove max-height and overflow-y to fit content */
+    /* max-height: 500px; */
+    /* overflow-y: auto; */
+}
+
+/* Styling for the body of the list */
+.list-body {
+    padding: 20px;
+}
+
 /* Table styling for todo list */
 .table {
-    width: 100%;
+    width: 100%; /* Make sure the table takes full width of the container */
     border-collapse: collapse;
-    margin-bottom: 20px;
 }
 
 /* Table header and cell styling */
@@ -99,62 +129,116 @@ body, html {
     color: #888;
 }
 
-/* Input group styling for individual todo items */
+/* Flexbox container for consistent item alignment */
 .input-group {
     display: flex;
-    align-items: center;
+    align-items: center; /* Center items vertically */
     margin-bottom: 10px;
+    border-bottom: 1px solid #ddd; /* Optional border for visual separation */
+    width: 100%; /* Ensure input group takes full width */
 }
 
 /* Styling for input fields within the input group */
-.input-group input[type="text"] {
+.input-group input[type="text"],
+.input-group input[type="datetime-local"] {
     flex: 1;
-    padding: 8px 12px;
+    padding: 12px; /* Increase padding for better visibility */
     border: 1px solid #ccc;
-    border-radius: 4px 0 0 4px;
+    border-radius: 4px;
+    height: 45px; /* Increased height for better visibility */
+    margin-right: 5px; /* Space between input and buttons */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    font-size: 16px; /* Increase font size for readability */
 }
 
 /* Styling for the checkbox and associated text in input group */
+.input-group-prepend {
+    display: flex;
+    align-items: center; /* Center checkbox vertically */
+    margin-right: 5px; /* Space between checkbox and input */
+}
+
+.input-group-text {
+    padding-top: 5px;
+}
+
+/* Ensure checkbox is the same height as the input field */
 .input-group-prepend .input-group-text {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 0 8px;
+    background-color: transparent; /* Remove background color */
     border-radius: 4px 0 0 4px;
+    padding: 0;
+    height: 45px; /* Same height as input fields */
+    display: flex;
+    align-items: center; /* Center checkbox vertically */
 }
 
-/* Styling for form labels in the schedule component */
-.container-schedule label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: bold;
-    color: #555;
+/* Ensure the checkbox itself is aligned and has consistent height */
+.input-group-prepend input[type="checkbox"] {
+    height: 22px; /* Match the height with input field for consistency */
+    width: 22px; /* Fixed width for checkbox */
+    margin-top: 10px; /* Center checkbox vertically */
+    cursor: pointer; /* Pointer cursor for checkboxes */
+    background-color: transparent; /* Remove background color */
+    border: 1px solid #ccc; /* Border to match input fields */
 }
 
-/* Input styling in the schedule component */
-.container-schedule input[type="text"],
-.container-schedule input[type="datetime-local"] {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
+/* Align buttons horizontally with equal spacing */
+.input-group-append {
+    display: flex;
+    align-items: center; /* Center buttons vertically */
 }
 
-/* Special button styling for the edit and delete buttons */
-.input-group-append .btn-primary {
-    background-color: #007bff;
+/* Styling for buttons in input group */
+.input-group-append button {
+    height: 45px; /* Ensure buttons are the same height as input fields */
+    padding: 0 12px; /* Adjust padding to fit button content */
+    border-radius: 0 4px 4px 0; /* Round the right corners for a seamless look */
+    margin-left: 5px; /* Space between buttons */
+    white-space: nowrap; /* Prevent text from wrapping */
+    font-size: 16px; /* Increase font size for readability */
 }
 
-.input-group-append .btn-primary:hover {
-    background-color: #0056b3;
+/* Primary button styling */
+.btn-primary {
+    background-color: #007bff !important; /* Blue background for primary button */
+    border: none; /* Remove border */
 }
 
-.input-group-append .btn-danger {
-    background-color: #dc3545;
+.btn-primary:hover {
+    background-color: #0056b3 !important; /* Darker blue on hover */
 }
 
-.input-group-append .btn-danger:hover {
-    background-color: #c82333;
+/* Danger button styling */
+.btn-danger {
+    background-color: #dc3545 !important; /* Red background for danger button */
+    border: none; /* Remove border */
+}
+
+.btn-danger:hover {
+    background-color: #c82333 !important; /* Darker red on hover */
+}
+
+/* Default styling for input */
+.form-control-input {
+    flex: 1; /* Allows the input to take up available space */
+    padding: 12px; /* Increases padding for better visibility */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Increases font size for readability */
+    height: 45px; /* Ensures consistent height with other elements */
+    box-sizing: border-box; /* Includes padding and border in element's total width and height */
+    margin-right: 5px; /* Space between input and buttons */
+    transition: border-color 0.3s ease; /* Smooth transition for border color */
+}
+
+/* Line-through style for completed items */
+.line-through {
+    text-decoration: line-through; /* Line through text */
+    color: #888; /* Light gray color for completed items */
+}
+
+/* Container for the table to ensure proper alignment and spacing */
+.todo-container {
+    width: 100%; /* Full width of the parent container */
+    overflow-x: auto; /* Allow horizontal scrolling if the table is too wide */
 }

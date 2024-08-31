@@ -1,6 +1,7 @@
 import "../../style/home.css";
 import { useState } from "react";
 import ScheduleListApp from "./ScheduleListApp";
+import {Link} from "react-router-dom";
 
 const Schedule = () => {
     const [formData, setFormData] = useState({
@@ -71,7 +72,9 @@ const Schedule = () => {
             <button onClick={handleSubmit} disabled={loading}>
                 {loading ? "Submitting..." : "Create Schedule"}
             </button>
+            <hr/>
             <ScheduleListApp />
+            <Link to={"/"}><button className="btn-primary">Back</button></Link>
         </div>
     );
 };
