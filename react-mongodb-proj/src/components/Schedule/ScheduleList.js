@@ -4,7 +4,7 @@ const ScheduleList = ({ todoList, onDoneFlag, onDelete, onEdit }) => {
     return (
         <>
             {todoList.map((item) => (
-                <tr key={item.no}>
+                <tr key={item.id}>
                     <ScheduleListItem
                         item={item}
                         onDoneFlag={onDoneFlag}
@@ -20,8 +20,8 @@ const ScheduleList = ({ todoList, onDoneFlag, onDelete, onEdit }) => {
 const ScheduleListItem = ({ item, onDoneFlag, onDelete, onEdit }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [titleTmp, setTitleTmp] = useState(item.title);
-    const [dateFromTmp, setDateFromTmp] = useState(item.dateFrom);
-    const [dateToTmp, setDateToTmp] = useState(item.dateTo);
+    const [dateFromTmp, setDateFromTmp] = useState(item.start);
+    const [dateToTmp, setDateToTmp] = useState(item.end);
 
     return (
         <>

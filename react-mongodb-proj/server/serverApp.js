@@ -110,17 +110,6 @@ router.route("/user").post((req, res) => {
     }
 })
 
-router.route("/schedule").post(async (req, res) => {
-    try {
-        console.log(req.body);
-        await scheduleCollection.insertOne(req.body);
-        res.send({ flag: true });
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Error connecting to MongoDB');
-    }
-});
-
 const transformDocs = (docs) => docs.map(item => ({
     ...item,
     id: item._id.toString(),
@@ -129,7 +118,7 @@ const transformDocs = (docs) => docs.map(item => ({
 
 router.route("/scheduleAll").get(async (req, res) => {
     try {
-        const docs = await scheduleCollection.find({}, { projection: { email: 0 } }).toArray(); // Use projection to exclude email
+        const docs = await scheduleCollection.find({}, { projection: { email: 0, done : 0 } }).toArray(); // Use projection to exclude email
         const transformedDocs = transformDocs(docs);
         res.send({ flag: true, schedules: transformedDocs });
     } catch (err) {
@@ -140,7 +129,7 @@ router.route("/scheduleAll").get(async (req, res) => {
 
 router.route("/schedule").get(async (req, res) => {
     try {
-        const docs = await scheduleCollection.find({ email: req.session.user.email }).toArray();
+        const docs = await scheduleCollection.find({ email: req.session.user.email }, {projection : {email : 0}}).toArray();
         const transformedDocs = transformDocs(docs);
         res.send({ flag: true, schedules: transformedDocs });
     } catch (err) {
@@ -150,6 +139,16 @@ router.route("/schedule").get(async (req, res) => {
     }
 });
 
+router.route("/schedule").post(async (req, res) => {
+    try {
+        console.log(req.body);
+        await scheduleCollection.insertOne({...req.body, email : req.session.user.email, done : false});
+        res.send({ flag: true });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error connecting to MongoDB');
+    }
+});
 
 app.use('/', router);
 

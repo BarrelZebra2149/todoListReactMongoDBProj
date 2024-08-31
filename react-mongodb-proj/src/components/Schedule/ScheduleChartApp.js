@@ -21,7 +21,7 @@ export default class ScheduleChartApp extends React.Component {
     // Fetch events when the component mounts
     async componentDidMount() {
         try {
-            const response = await axios.get(serverURI);// Replace with your actual API endpoint
+            const response = await axios.get(serverURI, {withCredentials : true});// Replace with your actual API endpoint
             console.log(response.data.schedules);
             if(response.data.flag) {
                 this.setState({
