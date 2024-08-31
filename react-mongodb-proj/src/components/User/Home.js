@@ -3,7 +3,6 @@ import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {signOut} from "../../store/authActions";
 import ScheduleChartApp from "../Schedule/ScheduleChartApp";
-import ScheduleListApp from "../Schedule/ScheduleListApp";
 import {Link} from "react-router-dom";
 
 const serverURL = "http://localhost:5000/logout";
@@ -26,7 +25,7 @@ const Home = () => {
                 <>
                     <Link to="/schedule"><button>Manage Schedule</button></Link>
                     <ScheduleChartApp/>
-                    <button onClick={handleLogout}>Log out</button>
+                    <button className="btn-danger" onClick={handleLogout}>Log out</button>
                 </>}
         </div>
     );

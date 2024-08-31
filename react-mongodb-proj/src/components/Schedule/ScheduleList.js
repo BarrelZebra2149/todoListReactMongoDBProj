@@ -5,7 +5,7 @@ const serverURL = "http://localhost:5000/schedule";
 const ScheduleList = () => {
     const [todoList, setTodoList] = useState([]);
 
-    useEffect(function () { updateList().then(r => 'initializing success')});
+    useEffect(function () { updateList().then(() => 'initializing success')});
 
     const updateList = async () => {
         const response = await axios.get(serverURL, {withCredentials : true});
@@ -23,16 +23,21 @@ const ScheduleList = () => {
     };
 
     // Function to handle toggling the done flag
-    const onDoneFlag = (item) => {
-
-        updateList().then(() => console.log('flag reversed'));
+    const onDoneFlag = async (item) => {
+        const response = await axios.put(serverURL, {done : !item.done, originalTitle : item.title, title : item.title}, {withCredentials : true});
+        if(response.data.flag) {
+            updateList().then(() => console.log('flag changed'));
+        }
     };
 
     // Function to handle task editing
-    const onEdit = (item) => {
-
-        updateList().then(() => console.log('edit success'));
+    const onEdit = async (item) => {
+        const response = await axios.put(serverURL, {done : item.done, originalTitle : item.originalTitle, title : item.title}, {withCredentials : true});
+        if(response.data.flag) {
+            updateList().then(() => console.log('edit success'));
+        }
     };
+
     return (
         <>
             {todoList.map((item) => (
@@ -54,7 +59,6 @@ const ScheduleListItem = ({ item, onDoneFlag, onDelete, onEdit }) => {
     const [titleTmp, setTitleTmp] = useState(item.title);
     const [dateFromTmp, setDateFromTmp] = useState(item.start);
     const [dateToTmp, setDateToTmp] = useState(item.end);
-
     return (
         <>
             <td>
@@ -75,7 +79,7 @@ const ScheduleListItem = ({ item, onDoneFlag, onDelete, onEdit }) => {
                     onFocus={() => setIsEditing(true)}
                     onBlur={() => {
                         setIsEditing(false);
-                        onEdit({...item, title: titleTmp, dateFrom: dateFromTmp, dateTo: dateToTmp});
+                        onEdit({...item, originalTitle : item.title, title: titleTmp, dateFrom: dateFromTmp, dateTo: dateToTmp});
                     }}
                 />
             </td>

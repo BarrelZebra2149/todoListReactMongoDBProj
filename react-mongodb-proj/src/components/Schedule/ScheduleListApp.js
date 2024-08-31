@@ -1,12 +1,7 @@
 import "../../style/list.css";
-import {useEffect, useState} from "react";
 import ScheduleList from "./ScheduleList";
-import axios from "axios";
-
-const serverURL = "http://localhost:5000/schedule"
 
 const ScheduleListApp = () => {
-
     return (
         <div className="todoList">
             <div className="list-body">

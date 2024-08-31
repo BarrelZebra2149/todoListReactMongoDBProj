@@ -160,9 +160,12 @@ router.route("/schedule").delete(async (req, res) => {
 });
 
 router.route("/schedule").put(async (req, res) => {
+    console.log(req.body);
+    console.log(req.body.done);
     try {
-
-
+        await scheduleCollection.updateOne(
+                { email : req.session.user.email, title:req.body.originalTitle },
+                { $set: { done : req.body.done, title:req.body.title}});
         res.send({ flag: true });
     } catch (err) {
         console.error(err);

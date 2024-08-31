@@ -37,3 +37,12 @@ button {
 button:hover {
     background-color: #e60000;
 }
+
+.btn-danger {
+    background-color: #dc3545 !important; /* Red background for danger button */
+    border: none; /* Remove border */
+}
+
+.btn-danger:hover {
+    background-color: #c82333 !important; /* Darker red on hover */
+}
