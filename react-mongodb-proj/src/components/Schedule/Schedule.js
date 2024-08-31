@@ -1,4 +1,6 @@
+import "../../style/home.css";
 import { useState } from "react";
+import ScheduleListApp from "./ScheduleListApp";
 
 const Schedule = () => {
     const [formData, setFormData] = useState({
@@ -19,9 +21,7 @@ const Schedule = () => {
     const handleSubmit = async () => {
         setLoading(true);
         try {
-            // Handle form submission (e.g., send data to server)
             console.log("Submitting form data:", formData);
-            // Simulate a delay for submission
             await new Promise((resolve) => setTimeout(resolve, 1000));
             alert("Schedule created successfully!");
         } catch (error) {
@@ -71,6 +71,7 @@ const Schedule = () => {
             <button onClick={handleSubmit} disabled={loading}>
                 {loading ? "Submitting..." : "Create Schedule"}
             </button>
+            <ScheduleListApp />
         </div>
     );
 };

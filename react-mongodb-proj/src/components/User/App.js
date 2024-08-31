@@ -5,6 +5,7 @@ import Login from "./Login";
 import Home from "./Home";
 import SignUp from "./SignUp";
 import { checkAuthStatus } from "../../store/authActions";
+import Schedule from "../Schedule/Schedule";
 
 function App() {
     const dispatch = useDispatch();
@@ -15,8 +16,9 @@ function App() {
 
     return (
         <Routes>
-            <Route path="/" element={isAuthenticated ? (<Home />) : (<Login />)} />
+            <Route path="/" element={isAuthenticated ? <Home /> : <Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/schedule" element={isAuthenticated ? <Schedule/> : <Login />} />
         </Routes>
     );
 }

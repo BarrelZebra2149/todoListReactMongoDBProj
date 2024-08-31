@@ -2,8 +2,9 @@ import "../../style/home.css"
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {signOut} from "../../store/authActions";
-import Schedule from "../Schedule/Schedule";
-import ScheduleApp from "../Schedule/ScheduleApp";
+import ScheduleChartApp from "../Schedule/ScheduleChartApp";
+import ScheduleListApp from "../Schedule/ScheduleListApp";
+import {Link} from "react-router-dom";
 
 const serverURL = "http://localhost:5000/logout";
 const Home = () => {
@@ -23,8 +24,8 @@ const Home = () => {
         <div className="container">
             {isAuthenticated &&
                 <>
-                    <Schedule/>
-                    <ScheduleApp/>
+                    <Link to="/schedule"><button>Manage Schedule</button></Link>
+                    <ScheduleChartApp/>
                     <button onClick={handleLogout}>Log out</button>
                 </>}
         </div>
