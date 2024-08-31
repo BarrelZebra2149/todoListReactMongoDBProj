@@ -98,13 +98,14 @@ router.route("/checkLogOn").get((req, res) => {
     res.send({ flag: !!req.session.user });
 })
 
-router.route("/user").post((req, res) => {
+router.route("/user").post(async (req, res) => {
     try {
-        userCollection.insertOne({...req.body, email:req.session.user.email});
-        res.send({ flag: true });
+        const response = await userCollection.insertOne({...req.body});
+        if(response.body.flag) {
+            res.send({ flag: true });
+        }
     } catch (err) {
-        console.error(e);
-        res.status(500).send('Error connecting to MongoDB');
+        console.error(err);
         res.send({ flag: false });
     }
 })
@@ -122,7 +123,7 @@ router.route("/scheduleAll").get(async (req, res) => {
         res.send({ flag: true, schedules: transformedDocs });
     } catch (err) {
         console.error(err);
-        res.status(500).send('Error connecting to MongoDB');
+        res.send({ flag: false });
     }
 });
 
@@ -133,8 +134,7 @@ router.route("/schedule").get(async (req, res) => {
         res.send({ flag: true, schedules: transformedDocs });
     } catch (err) {
         console.error(err);
-        res.status(500).send('Error connecting to MongoDB');
-        res.send({ flag: false, schedules: [] });
+        res.send({ flag: false });
     }
 });
 
@@ -145,7 +145,7 @@ router.route("/schedule").post(async (req, res) => {
         res.send({ flag: true });
     } catch (err) {
         console.error(err);
-        res.status(500).send('Error connecting to MongoDB');
+        res.send({ flag: false });
     }
 });
 
@@ -155,21 +155,25 @@ router.route("/schedule").delete(async (req, res) => {
         res.send({ flag: true });
     } catch (err) {
         console.error(err);
-        res.status(500).send('Error connecting to MongoDB');
+        res.send({ flag: false });
     }
 });
 
 router.route("/schedule").put(async (req, res) => {
     console.log(req.body);
-    console.log(req.body.done);
+    console.log(req.body.dateFrom);
+    console.log(req.body.dateTo);
     try {
+        if(req.body.dateFrom.valueOf() >= req.body.dateTo.valueOf()) {
+            res.send({ flag: false });
+            return;
+        }
         await scheduleCollection.updateOne(
                 { email : req.session.user.email, title:req.body.originalTitle },
-                { $set: { done : req.body.done, title:req.body.title}});
+                { $set: { done : req.body.done, title:req.body.title, start:req.body.dateFrom.toString(), end:req.body.dateTo.toString()}});
         res.send({ flag: true });
     } catch (err) {
-        console.error(err);
-        res.status(500).send('Error connecting to MongoDB');
+        res.send({ flag: false });
     }
 });
 

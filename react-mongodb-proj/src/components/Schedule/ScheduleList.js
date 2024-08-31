@@ -23,16 +23,19 @@ const ScheduleList = () => {
     };
 
     // Function to handle toggling the done flag
-    const onDoneFlag = async (item) => {
-        const response = await axios.put(serverURL, {done : !item.done, originalTitle : item.title, title : item.title}, {withCredentials : true});
+    const onEdit = async (item) => {
+        const response = await axios.put(serverURL, {done : item.done, originalTitle : item.title, title : item.title, dateFrom : item.dateFrom, dateTo : item.dateTo}, {withCredentials : true});
         if(response.data.flag) {
             updateList().then(() => console.log('flag changed'));
+        } else {
+            alert(`end date can't be before start date`);
+            updateList().then(() => console.log('edit error'));
         }
     };
 
     // Function to handle task editing
-    const onEdit = async (item) => {
-        const response = await axios.put(serverURL, {done : item.done, originalTitle : item.originalTitle, title : item.title}, {withCredentials : true});
+    const onTitleEdit = async (item) => {
+        const response = await axios.put(serverURL, {done : item.done, originalTitle : item.originalTitle, title : item.title, dateFrom : item.dateFrom, dateTo : item.dateTo}, {withCredentials : true});
         if(response.data.flag) {
             updateList().then(() => console.log('edit success'));
         }
@@ -44,7 +47,7 @@ const ScheduleList = () => {
                 <tr key={item.id}>
                     <ScheduleListItem
                         item={item}
-                        onDoneFlag={onDoneFlag}
+                        onTitleEdit={onTitleEdit}
                         onDelete={onDelete}
                         onEdit={onEdit}
                     />
@@ -54,7 +57,7 @@ const ScheduleList = () => {
     );
 };
 
-const ScheduleListItem = ({ item, onDoneFlag, onDelete, onEdit }) => {
+const ScheduleListItem = ({ item, onTitleEdit, onDelete, onEdit }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [titleTmp, setTitleTmp] = useState(item.title);
     const [dateFromTmp, setDateFromTmp] = useState(item.start);
@@ -65,7 +68,7 @@ const ScheduleListItem = ({ item, onDoneFlag, onDelete, onEdit }) => {
                 <input
                     type="checkbox"
                     checked={item.done}
-                    onChange={() => onDoneFlag(item)}
+                    onChange={() => onEdit({...item, done:!item.done, dateFrom: dateFromTmp, dateTo: dateToTmp})}
                 />
             </td>
             <td>
@@ -79,7 +82,7 @@ const ScheduleListItem = ({ item, onDoneFlag, onDelete, onEdit }) => {
                     onFocus={() => setIsEditing(true)}
                     onBlur={() => {
                         setIsEditing(false);
-                        onEdit({...item, originalTitle : item.title, title: titleTmp, dateFrom: dateFromTmp, dateTo: dateToTmp});
+                        onTitleEdit({...item, originalTitle : item.title, title: titleTmp, dateFrom: dateFromTmp, dateTo: dateToTmp});
                     }}
                 />
             </td>
